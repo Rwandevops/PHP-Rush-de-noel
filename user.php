@@ -73,7 +73,7 @@ class user
 
 class admin extends user
 {
-    private $isAdmin = true;
+    protected $isAdmin = true;
     
     public function adminCreate($name, $email, $password)
         {
@@ -157,6 +157,11 @@ class admin extends user
             $product->setPrice = $price;
        }
 
+    public function categoryNameModify(category $category, $name)
+       {
+           $category->name = $name;
+       }
+       
     public function __construct()
         {
             parent::__construct();
