@@ -73,7 +73,7 @@ function getProductName(PDO $db, $id)
 
     $stmt->execute();
     $productName = $stmt->fetch(PDO::FETCH_NUM);
-    return $productName;
+    return $productName[0];
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
@@ -89,7 +89,7 @@ function productCategoryGet(PDO $db,; $id)
 
     $stmt->execute();
     $productCategory = $stmt->fetch(PDO::FETCH_NUM);
-    return $productCategory;
+    return $productCategory[0];
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
