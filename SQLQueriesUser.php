@@ -26,7 +26,7 @@ function userNameUpdate(PDO $db)
     $stmt = $db->prepare($sql);                                  
     
     $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
-   
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
     $stmt->execute();
 }
 
@@ -39,8 +39,8 @@ function userEmailUpdate(PDO $db)
 
     $stmt = $db->prepare($sql);                                  
     
-    $stmt->bindParam(':username', $_POST['email'], PDO::PARAM_STR);
-   
+    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
     $stmt->execute();
 }
 
@@ -53,22 +53,34 @@ function userPasswordUpdate(PDO $password)
 
     $stmt = $db->prepare($sql);                                  
     
-    $stmt->bindParam(':username', $_POST['password'], PDO::PARAM_STR);
-   
+    $stmt->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);    
     $stmt->execute();
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
 
-// Update user name:
-function userIsAdminUpdate(PDO $db)
+// Update user isAdmin:
+function userIsAdminUpdate(PDO $db, bool $isAdmin)
 {
     $sql = "UPDATE users SET isAdmin = :isAdmin WHERE id = :id";
 
     $stmt = $db->prepare($sql);                                  
     
-    $stmt->bindParam(':username', $_POST['isAdmin'], PDO::PARAM_STR);
-   
+    $stmt->bindParam(':isAdmin', $isAdmin, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Get user isAdmin:
+function userIsAdminGet(PDO $db)
+{
+    $sql = "SELECT isAdmin FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);     
     $stmt->execute();
 }
 
