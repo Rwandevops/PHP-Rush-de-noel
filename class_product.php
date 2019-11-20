@@ -1,6 +1,7 @@
 <?php
+require_once('class_database');
 
-class product
+class Product
 {
     private $name;
     private $category;
