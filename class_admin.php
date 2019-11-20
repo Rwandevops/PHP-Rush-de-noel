@@ -112,4 +112,19 @@ class Admin extends User
     {
         return sprintf('<option value="%s">',$this->name);
     }
+    
+    protected function getAllUsers()
+        {
+            $sql="SELECT * FROM users";
+            $result=$this->connect()->query($sql);
+            $numRows=$result->rowCount();
+            if ($numRows>0)
+            {
+                while($row=$result->fetch(PDO::FETCH_ASSOC))
+                {
+                    $data[]=$row;
+                }
+                return $data;
+            }
+        }  
 }
