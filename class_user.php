@@ -1,50 +1,50 @@
 <?php
 require_once('class_database.php');
-
+require_once('SQLQueriesUser.php');
 class User extends Database
 {
     protected $name;
     protected $email;
     protected $password;
     protected $isAdmin = false;
-    private static $ID = 0;
+    private static $Id = 0;
 
-    public function getName()
+    public function getName($conn)
         {
-            return $this->name;
+            return SQLgetUserName($conn, $this->Id);
         }
 
-    public function setName($name)
+    public function setName($conn, $name)
         {
             $this->name = $name;
-            update_user($conn); // modif dans la BDD
+            SQLUserNameUpdate($conn, $this->Id, $name); // modif dans la BDD
         }
 
-    public function getEmail()
+    public function getEmail($conn)
         {
-            return $this->email;
+            return SQLGetUserEmail($conn, $this->Id);
         }
 
-    public function setEmail($email)
+    public function setEmail($conn, $email)
         {
             $this->email = $email;
-            update_user($conn); // modif dans la BDD
+            SQLUserUpdate($conn, $this->Id, $email); // modif dans la BDD
         }
     
-    public function setPassword($password)
+    public function setPassword($conn, $password)
         {
             $this->password = password_hash($password);
-            update_user($conn); // modif dans la BDD
+            SQLUserUpdate($conn, $this->Id, $this->password); // modif dans la BDD
         }
     
     public function getPassword()
         {
-            return $this->password;
+            return SQLGetUserPassword($conn, $this->Id);
         }
 
     public function getIsAdmin()
         {
-            return $this->isAdmin;
+            return SQLGetUserIsAdmin($conn, $this->Id);
         }
 
     public function productDisplay(product $product)
@@ -72,20 +72,6 @@ class User extends Database
             }
         }
     
-    public function __construct($name, $email, $password)
-        {
-            setName($name);
-            setEmail($email);
-            setPassword($password);
-            self::$ID++;
-            add_user($conn); // enregistrement dans la BDD
-        }
-
-    public function __destruct()
-        {
-            delete_user($conn); // détruit la ligne user dans la BDD
-        }
-    
     public function productSearchEngine(product $product)
         {
             // recherche un produit dans la BDD
@@ -95,4 +81,18 @@ class User extends Database
     {
         return sprintf('<option value="%s">',$this->name);
     }
+
+    public function __construct($name, $email, $password)
+        {
+            $this->name = $name;
+            $this->email = $email;
+            $this->password = password_hash($password);
+            self::$ID++;
+            SQLAddUser($conn, $name, $email, $this->password); // enregistrement dans la BDD
+        }
+
+    public function __destruct()
+        {
+            SQLDeleteUser($conn, $this->Id); // détruit la ligne user dans la BDD
+        }
 }
