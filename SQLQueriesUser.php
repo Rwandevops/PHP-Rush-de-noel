@@ -89,10 +89,22 @@ function userNameGet(PDO $db)
 // Get user Email:
 function userEmailGet(PDO $db)
 {
-    $sql = "SELECT email FROM users WHERE id = :id";
+    $sql = "SELECT email FROM users WHERE email = :email";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);     
+    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_INT);     
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Get user id:
+function userIdGet(PDO $db)
+{
+    $sql = "SELECT id FROM users WHERE email = :email";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_INT);     
     $stmt->execute();
 }
 
