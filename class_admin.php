@@ -1,5 +1,7 @@
 <?php
 require_once('class_user.php');
+require_once('SQLQueriesCategory.php');
+require_once('SQLQueriesProduct.php');
 
 class Admin extends User
 {
@@ -8,34 +10,37 @@ class Admin extends User
     public function adminCreate($name, $email, $password)
         {
             __construct($name, $email, $password);
-            // + inscription à la BDD
+            add_user(PDO $db); // inscription à la BDD
         }
     
     public function userCreate($name, $email, $password)
         {
             parent::__construct($name, $email, $password);
-            // + inscription à la BDD
+            add_user(PDO $db); // inscription à la BDD
         }
     
     public function userDelete(user $user)
         {
             $user->__destruct();
-            // + inscription dans la BDD
+            delete_user($db); // inscription dans la BDD
         }
 
    public function userNameModify(user $user, $name)
        {
             $user->setName($name);
+            update_user($db); // modification de la BDD
        }
 
     public function userEmailModify(user $user, $email)
        {
             $user->setEmail($email);
+            update_user($db); // modification de la BDD
        }
 
     public function userPasswordModify(user $user, $password)
        {
             $user->setPassword($name);
+            update_user($db); // modification de la BDD
        }
 
     public function getIsAdmin()
@@ -49,7 +54,7 @@ class Admin extends User
             createAdmin($user->name, $user->email, $user->password);
             echo($user->name . " est maintenant administrateur.\n");
             deleteUser($user);
-            // + modif de la bdd
+            update_user($db); // modification de la BDD
         }
     
     private function setToUser(admin $admin)
@@ -57,45 +62,50 @@ class Admin extends User
             createUser($admin->name, $admin->email, $admin->password);
             echo($admin->name . " est maintenant simple utilisateur.\n");
             __destruct($admin);
-            // + modif de la bdd
+            update_user($db); // modification de la BDD
         }
 
     public function productCreate($name, $category, $price)
         {
             $this->__construct($name, $category, $price);
-            // + inscription à la BDD
+            add_product($db); // inscription à la BDD
         }
     
     public function productDelete(product $product)
         {
             $product->__destruct();
-            // + inscription dans la BDD
+            delete_product($db);// destruction dans la BDD
         }
 
    public function productNameModify(product $product, $name)
        {
             $product->setName = $name;
+            update_product($db); // modif de la BDD
        }
 
     public function productCategoryModify(product $product, $category)
        {
             $product->setCategory = $category;
+            update_product($db); // modif de la BDD
        }
 
     public function productPriceModify(product $product, $price)
        {
             $product->setPrice = $price;
+        ²   update_product($db); // Mdif de la BDD
        }
 
     public function categoryNameModify(category $category, $name)
        {
            $category->name = $name;
+           update_category($db); // Modif de la BDD
        }
        
     public function __construct()
         {
             parent::__construct();
             $this->isAdmin = true;
+            add_user($db); // Inscription dans la BDD
         }
     
     public function dataListLine()
