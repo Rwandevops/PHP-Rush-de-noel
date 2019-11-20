@@ -1,7 +1,7 @@
 <?php
 require_once("class_category.php");
 
-class ViewCategory extends Category
+class ViewCategoryAsAdmin extends Category
 {
     public function showAllCategories()
     {
