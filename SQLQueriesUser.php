@@ -4,14 +4,14 @@
 // Add user :
 function userAdd(PDO $db,$username,$password,$email,$admin)
 {
-    $sql = "INSERT INTO users (username, password, email, admin VALUES(:username, :password, :email, :admin))";
+    $sql = "INSERT INTO users (username, password, email, isAdmin) VALUES(:username, :password, :email, :isAdmin)";
                                           
     $stmt = $db->prepare($sql);
                                               
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
     $stmt->bindParam(':password', $password, PDO::PARAM_STR); 
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);       
-    $stmt->bindParam(':admin', $admin, PDO::PARAM_BOOL);                                 
+    $stmt->bindParam(':isAdmin', $admin, PDO::PARAM_BOOL);                                 
     $stmt->execute();
 }
 
@@ -83,13 +83,13 @@ function userNameGet(PDO $db, $id)
     $stmt->execute();
     $name=$stmt->fetch(PDO::FETCH_NUM);
 
-    return $name[0];
+    return $name;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user Email:
-function userEmailGet(PDO $db,$email)
+function userEmailGet($db,$email)
 {
     $sql = "SELECT email FROM users WHERE email = :email";
 
@@ -98,7 +98,7 @@ function userEmailGet(PDO $db,$email)
     $stmt->execute();
     $mail=$stmt->fetch(PDO::FETCH_NUM);
 
-    return $mail[0];
+    return $mail;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
@@ -113,7 +113,7 @@ function userIdGet(PDO $db,$email)
     $stmt->execute();
     $id=$stmt->fetch(PDO::FETCH_NUM);
 
-    return $id[0];
+    return $id;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
@@ -128,7 +128,7 @@ function userPasswordGet(PDO $db, $id)
     $stmt->execute();
     $password=$stmt->fetch(PDO::FETCH_NUM);
 
-    return $password[0];
+    return $password;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
@@ -143,7 +143,7 @@ function userIsAdminGet(PDO $db,$id)
     $stmt->execute();
     $isAdmin=$stmt->fetch(PDO::FETCH_NUM);
 
-    return $isAdmin[0];
+    return $isAdmin;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
