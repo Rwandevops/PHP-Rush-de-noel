@@ -1,5 +1,5 @@
 <?php
-class Viewuser extends Admin
+class Viewuser extends User
 {
     public function showAllUsers()
     {
@@ -13,7 +13,9 @@ class Viewuser extends Admin
             echo $data['admin']."<br>";
             
         }
-         public function showSelfUser()
+        
+    }
+    public function showSelfUser()
     {
         $datas=$this->getSelfUser();
         foreach ($datas as $data)
@@ -27,5 +29,5 @@ class Viewuser extends Admin
         }
         
     }
-    }
+
 }
