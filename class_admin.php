@@ -1,7 +1,7 @@
 <?php
 require_once('class_user.php');
 
-class admin extends user
+class Admin extends User
 {
     protected $isAdmin = true;
     
