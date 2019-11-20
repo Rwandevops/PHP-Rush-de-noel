@@ -6,34 +6,35 @@ class Category extends Database
 {
     private $name;
     protected $parentId;
-    static $ID = 0;
+    static $Id = 0;
 
-    public function setName($name)
+    public function setName($conn, $name)
         {
             $this->name = $name;
+            updateCategoryName($conn, $name); // modif de la bdd
         }
 
-    public function getName()
+    public function getName($conn, $id)
         {
-            return $this->name;
+            return getCategoryName($conn, $id);
         }
 
-    public function getParentId()
+    public function getParentId($conn, $id)
         {
-            return $this->parentId;
+            return getCategoryParentId($conn, $Id);
         }
     
-    public function __construct($name, $parent_id)
+    public function __construct($conn, $name, $parent_id)
         {
             setName($name);
             $this->parentId = $parent_id;
-            self::$ID++;
-            add_category(PDO $conn);  // enregistrement dans la BDD
+            self::$Id++;
+            add_category($conn);  // enregistrement dans la BDD
         }
 
-    public function __destruct()
+    public function __destruct($conn, $id)
         {
-            delete_category($conn); //détruire la ligne product dans la BDD
+            delete_category($conn, $id); //détruire la ligne product dans la BDD
         }
   public function datalistLine()
         {
