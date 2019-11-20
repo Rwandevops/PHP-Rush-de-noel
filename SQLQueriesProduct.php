@@ -59,6 +59,34 @@ function productUpdateCategory(PDO $db)
 
 // ------------------------------------------------------------------------------------------------------------ //
 
+// Get product name:
+function productNameGet(PDO $db)
+{
+    $sql = "SELECT name FROM products WHERE id =  :id";
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
+
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Get product category:
+function productCategoryGet(PDO $db)
+{
+    $sql = "SELECT categroy FROM products WHERE id =  :id";
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
+
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
 // Delete product :
 function productDelete(PDO $db)
 {
