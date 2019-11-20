@@ -53,6 +53,15 @@ if(!$_SESSION["admin"])
 $users=new ViewUser();
 $users->showAllUsers();
 
+//A FAIRE !!!!!
+//Changer viewUser sur Admin
+//creer viewProduct
+//creer viewCategory
+//completer dataset
+//Verif constructeur obligatoires de classe
+//dissocier category et product
+//gerer les require
+
 
 
 ?>
