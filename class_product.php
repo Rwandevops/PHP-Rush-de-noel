@@ -1,5 +1,6 @@
 <?php
 require_once('class_database');
+require_once('SQLQueriesProduct');
 
 class Product extends Database
 {
@@ -16,7 +17,6 @@ class Product extends Database
     public function setName($name)
         {
             $this->name = $name;
-            // + enregistrement dans la BDD
         }
 
     public function getCategory()
@@ -27,7 +27,6 @@ class Product extends Database
     public function setCategory($category)
         {
             $this->category = $category;
-            // + enregistrement dans la BDD
         }
     
     public function getPrice()
@@ -38,12 +37,6 @@ class Product extends Database
     public function setPrice($price)
         {
             $this->price = $price;
-            // + enregistrement dans la BDD
-        }
-    
-    public function display()
-        {
-            // affiche le produit
         }
 
     public function __construct($name, $category, $price)
@@ -52,11 +45,11 @@ class Product extends Database
             setCategory($category);
             setPrice($price);
             self::$ID++;
-            // + enregistrement dans la BDD
+            add_product(PDO $db); // enregistrement dans la BDD
         }
 
     public function __destruct()
         {
-            //détruire la ligne product dans la BDD
+            delete_product(PDO $db); //détruire la ligne product dans la BDD
         }
 }
