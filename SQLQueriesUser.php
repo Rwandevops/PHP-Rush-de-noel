@@ -2,7 +2,7 @@
 //user : id, username, password, email, admin
 
 // Add user :
-function userAdd(PDO $db,$username,$password,$email,$admin)
+function SQLAddUser(PDO $db, $username, $password, $email, $admin)
 {
     $sql = "INSERT INTO users (username, password, email, isAdmin) VALUES(:username, :password, :email, :isAdmin)";
                                           
@@ -18,7 +18,7 @@ function userAdd(PDO $db,$username,$password,$email,$admin)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update user name:
-function userNameUpdate(PDO $db,$username,$id)
+function SQLUpdateUserName(PDO $db, $username, $id)
 {
     $sql = "UPDATE users SET username = :username WHERE id = :id";
 
@@ -32,7 +32,7 @@ function userNameUpdate(PDO $db,$username,$id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update user email:
-function userEmailUpdate(PDO $db,$email,$id)
+function SQLUpdateUserEmail(PDO $db, $email, $id)
 {
     $sql = "UPDATE users SET email = :email WHERE id = :id";
 
@@ -46,7 +46,7 @@ function userEmailUpdate(PDO $db,$email,$id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update user name:
-function userPasswordUpdate(PDO $db, $password, $id)
+function SQLUpdateUserPassword(PDO $db, $password, $id)
 {
     $sql = "UPDATE users SET password = :password WHERE id = :id";
 
@@ -60,7 +60,7 @@ function userPasswordUpdate(PDO $db, $password, $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update user isAdmin:
-function userIsAdminUpdate(PDO $db, bool $isAdmin, $id)
+function SQLUpdateUserIsAdmin(PDO $db, bool $isAdmin, $id)
 {
     $sql = "UPDATE users SET isAdmin = :isAdmin WHERE id = :id";
 
@@ -74,7 +74,7 @@ function userIsAdminUpdate(PDO $db, bool $isAdmin, $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user Name:
-function userNameGet(PDO $db, $id)
+function SQLGetUserName(PDO $db, $id)
 {
     $sql = "SELECT name FROM users WHERE id = :id";
 
@@ -89,7 +89,7 @@ function userNameGet(PDO $db, $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user Email:
-function userEmailGet($db,$email)
+function SQLGetUserEmail($db, $email)
 {
     $sql = "SELECT email FROM users WHERE email = :email";
 
@@ -104,7 +104,7 @@ function userEmailGet($db,$email)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user id:
-function userIdGet(PDO $db,$email)
+function SQLGetUserId(PDO $db,$email)
 {
     $sql = "SELECT id FROM users WHERE email = :email";
 
@@ -119,7 +119,7 @@ function userIdGet(PDO $db,$email)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user Password:
-function userPasswordGet(PDO $db, $id)
+function SQLGetUserPassword(PDO $db, $id)
 {
     $sql = "SELECT password FROM users WHERE id = :id";
 
@@ -134,7 +134,7 @@ function userPasswordGet(PDO $db, $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get user isAdmin:
-function userIsAdminGet(PDO $db,$id)
+function SQLGetUserIsAdmin(PDO $db, $id)
 {
     $sql = "SELECT isAdmin FROM users WHERE id = :id";
 
@@ -149,7 +149,7 @@ function userIsAdminGet(PDO $db,$id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Delete user :
-function userDelete(PDO $db,$id)
+function SQLDeleteUser(PDO $db, $id)
 {
     $sql = "DELETE FROM users WHERE id =  :id";
     
