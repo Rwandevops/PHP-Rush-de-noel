@@ -5,7 +5,7 @@ class ViewUserAsUser extends User
 {    
     public function showSelf()
     {
-        $datas=$this->getAllUsers();
+        $datas=$this->getSelfUsers();
         foreach ($datas as $data)
         {
             echo $data['id']."<br>";
