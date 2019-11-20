@@ -1,3 +1,6 @@
+<?php
+require_once('class_user.php');
+
 class admin extends user
 {
     protected $isAdmin = true;
@@ -94,4 +97,9 @@ class admin extends user
             parent::__construct();
             $this->isAdmin = true;
         }
+    
+    public function dataListLine()
+    {
+        return sprintf('<option value="%s">',$this->name);
+    }
 }
