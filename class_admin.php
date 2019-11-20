@@ -8,111 +8,95 @@ class Admin extends User
 {
     protected $isAdmin = true;
     
-    public function adminCreate($name, $email, $password)
+    public function createAdmin($conn, $name, $email, $password)
         {
-            __construct($name, $email, $password);
-            userAdd($conn); // inscription à la BDD
-            userIsAdminUpdate($conn, true);
+            __construct($name, $email, $password); // SQL géré dans __construct
         }
     
-    public function userCreate($name, $email, $password)
+    public function createUser($conn, $name, $email, $password)
         {
-            parent::__construct($name, $email, $password);
-            userAdd($conn); // inscription à la BDD
-            userIsAdminUpdate($conn);
+            parent::__construct($name, $email, $password); // SQL géré dans __parent::construct
         }
     
-    public function userDelete(user $user)
+    public function deleteUser($conn, user $user)
         {
-            $user->__destruct();
-            userDelete($conn); // inscription dans la BDD
+            $user->__destruct($conn, $user->getId()); // SQL géré dans __destruct
         }
 
-   public function userNameModify(user $user, $name)
+   public function modifyUserName($conn, user $user, $name)
        {
-            $user->setName($name);
-            userNameUpdate($conn); // modification de la BDD
+            $user->setName($conn, $user->getId(), $name); // SQL géré dans la méthode de user
        }
 
-    public function userEmailModify(user $user, $email)
+    public function modifyUserEmail($conn, $user, $email)
        {
-            $user->setEmail($email);
-            userEmailUpdate($conn); // modification de la BDD
+            $user->setEmail($conn, $user->getId(), $email); // SQL géré dans la méthode setEmail
        }
 
-    public function userPasswordModify(user $user, $password)
+    public function modifyUserPassword($conn, user $user, $password)
        {
-            $user->setPassword($name);
-            userPasswordUpdate($conn); // modification de la BDD
+            $user->setPassword($conn, $user->getId(), $password); // SQL géré dans la méthode setPassword
+//            SQLUserPasswordUpdate($conn, $id, $password); // modification de la BDD
        }
 
-    public function getIsAdmin()
+    public function getIsAdmin($conn, $id)
         {
-            userIsAdminGet($conn);
-            return $this->isAdmin;
+            return SQLgetUserIsAdmin($conn, $id);
         }
 
-    private function setToAdmin(user $user)
+    private function setUserToAdmin($conn, user $user)
         {
-            $user_ID = $user->id;
-            createAdmin($user->name, $user->email, $user->password);
-            echo($user->name . " est maintenant administrateur.\n");
-            deleteUser($user);
-            userIsAdminUpdate($conn, true); // modification de la BDD
+            $name = $user->name;
+            $email = $user->email;
+            $password = $user->password;
+            deleteUser($conn, $user); // SQL géré dans deleteUser
+            createAdmin($conn, $name, $email, $password); // SQL géré dans createAdmin
+            echo($name . " est maintenant administrateur.\n");
+            SQLUpdateUserIsAdmin($conn, $this->id, true); // modification de la BDD
         }
     
-    private function setToUser(admin $admin)
+    private function setAdminToUser($conn, admin $admin)
         {
-            createUser($admin->name, $admin->email, $admin->password);
-            echo($admin->name . " est maintenant simple utilisateur.\n");
-            __destruct($admin);
-            userIsAdminUpdate($conn, false); // modification de la BDD
+            $name = $admin->name;
+            $email = $admin->email;
+            $password = $admin->password;
+            $admin->__destruct($conn); // SQL géré dans __destruct
+            createUser($conn); // SQL géré dans la BDD
+            echo($name . " est maintenant simple utilisateur.\n");
+            
+            SQLUpdateUserIsAdmin($conn, $this->id, false); // modification de la BDD
         }
 
-    public function productCreate($name, $category, $price)
+    public function createProduct($conn, $name, $category, $price)
         {
-            $this->__construct($name, $category, $price);
-            productAdd($conn); // inscription à la BDD
+            $product = new product($conn, $name, $category, $price); // SQL géré par product->__construct
         }
     
-    public function productDelete(product $product)
+    public function deleteProduct($conn, product $product)
         {
-            $product->__destruct();
-            productDelete($conn);// destruction dans la BDD
+            $product->__destruct($conn, $product->id); // SQL géré dans la méthode __destruct
         }
 
-   public function productNameModify(product $product, $name)
+   public function modifyProductName($conn, product $product, $name)
        {
-            $product->setName = $name;
-            productNameUpdate($conn); // modif de la BDD
+            setName($conn, $product->getId(), $name); // SQL géré dans setName
        }
 
-    public function productCategoryModify(product $product, $category)
+    public function modifyProductCategory($conn, product $product, $productCategory)
        {
-            $product->setCategory = $category;
-            productCategoryUpdate($conn); // modif de la BDD
+            $product->setProductCategory($conn, $product->getProductId(), $productCategory); // SQL géré dans la méthode setProductCategory
        }
 
-    public function productPriceModify(product $product, $price)
+    public function modifyProductPrice($conn, product $product, $price)
        {
-            $product->setPrice = $price;
-            productPriceUpdate($conn); // Mdif de la BDD
+            $product->setPrice($conn, $product->getProductId(), $price); // SQL géré dans la méthode getProductId();
        }
 
-    public function categoryNameModify(category $category, $name)
+    public function modifyCategoryName($conn, category $category, $name)
        {
-           $category->name = $name;
-           categoryNameUpdate($conn); // Modif de la BDD
+           $category->setName($conn, $category->getId(), $name); // SQL géré dans la méthode setName
        }
        
-    public function __construct()
-        {
-            parent::__construct();
-            $this->isAdmin = true;
-            userAdd($conn); // Inscription dans la BDD
-            userIsAdminUpdate($conn, true);
-        }
-    
     public function dataListLine()
         {
             return sprintf('<option value="%s">',$this->name);
@@ -132,4 +116,11 @@ class Admin extends User
                 return $data;
             }
         }  
+
+    public function __construct($conn)
+        {
+            parent::__construct(); // SQL géré dans cette méthode
+            $this->isAdmin = true;
+            SQLUserIsAdminUpdate($conn, $this->getId(), true); // modif de la BDD
+        }
 }
