@@ -11,7 +11,7 @@ function userAdd(PDO $db)
     $stmt->bindParam(':username', $_POST['username'], PDO::PARAM_STR);
     $stmt->bindParam(':password', $_POST['password'], PDO::PARAM_STR); 
     $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);       
-    $stmt->bindParam(':admin', $_POST['admin'], PDO::PARAM_INT); 
+    $stmt->bindParam(':admin', $_POST['admin'], PDO::PARAM_BOOL); 
                                       
     $stmt->execute();
 }
@@ -92,7 +92,7 @@ function userEmailGet(PDO $db)
     $sql = "SELECT email FROM users WHERE email = :email";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_INT);     
+    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);     
     $stmt->execute();
 }
 
@@ -104,7 +104,7 @@ function userIdGet(PDO $db)
     $sql = "SELECT id FROM users WHERE email = :email";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_INT);     
+    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);     
     $stmt->execute();
 }
 
