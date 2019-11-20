@@ -1,5 +1,6 @@
 <?php
 require_once('class_database.php');
+require_once('SQLQueriesCategory.php');
 
 class Category extends Database
 {
@@ -22,17 +23,17 @@ class Category extends Database
             return $this->parentId;
         }
     
-        public function __construct($name, $parent_id)
+    public function __construct($name, $parent_id)
         {
             setName($name);
             $this->parentId = $parent_id;
             self::$ID++;
-            // + enregistrement dans la BDD
+            add_category(PDO $db);  // enregistrement dans la BDD
         }
 
     public function __destruct()
         {
-            //détruire la ligne product dans la BDD
+            delete_category(PDO $db); //détruire la ligne product dans la BDD
         }
   public function datalistLine()
         {
