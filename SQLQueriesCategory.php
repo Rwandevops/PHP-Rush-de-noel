@@ -41,6 +41,26 @@ function categoryUpdateParentId(PDO $db)
 
 // ------------------------------------------------------------------------------------------------------------ //
 
+// Get category name:
+function categoryNameGet(PDO $db)
+{
+    $sql = "SELECT name FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_STR);           
+    $stmt->execute();
+}
+
+// Get category parent_id:
+function categoryParentIdGet(PDO $db)
+{
+    $sql = "SELECT parent_id FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_STR);           
+    $stmt->execute();
+}
+
 // Delete category :
 function categoryDelete(PDO $db)
 {
