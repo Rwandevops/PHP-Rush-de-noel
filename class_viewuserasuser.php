@@ -8,11 +8,8 @@ class ViewUserAsUser extends User
         $datas=$this->getSelfUsers();
         foreach ($datas as $data)
         {
-            echo $data['id']."<br>";
             echo $data['username']."<br>";
-            echo $data['password']."<br>";
             echo $data['email']."<br>";
-            echo $data['admin']."<br>";
         }
     }
 }
