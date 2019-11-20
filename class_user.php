@@ -70,4 +70,9 @@ class User extends Database
         {
             // recherche un produit dans la BDD
         }
+    
+    public function dataListLine()
+    {
+        return sprintf('<option value="%s">',$this->name);
+    }
 }
