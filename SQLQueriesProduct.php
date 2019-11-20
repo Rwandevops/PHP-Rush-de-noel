@@ -2,7 +2,7 @@
 // product : id, name, price, category_id
 
 // Add product :
-function addProduct(PDO $db, $name, $price, $category_id)
+function SQLAddProduct(PDO $db, $name, $price, $category_id)
 {
     $sql = "INSERT INTO products (name, price, category_id) VALUES(:name, :price, :category_id)";
                                           
@@ -18,11 +18,11 @@ function addProduct(PDO $db, $name, $price, $category_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product name:
-function updateProductName(PDO $db, $id, $name)
+function SQLUpdateProductName(PDO $db, $id, $name)
 {
     $sql = "UPDATE products SET name = :name WHERE id = :id";
 
-    $stmt = $pdo->prepare($sql);                                  
+    $stmt = $db->prepare($sql);                                  
     
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -33,7 +33,7 @@ function updateProductName(PDO $db, $id, $name)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product price:
-function updateProductPrice(PDO $db, $id, $price)
+function SQLUpdateProductPrice(PDO $db, $id, $price)
 {
     $sql = "UPDATE products SET price = :price WHERE id = :id";
 
@@ -48,7 +48,7 @@ function updateProductPrice(PDO $db, $id, $price)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product category:
-function updateProductCategory(PDO $db$id, $category)
+function SQLUpdateProductCategory(PDO $db, $id, $category)
 {
     $sql = "UPDATE products SET category = :category WHERE id = :id";
 
@@ -63,7 +63,7 @@ function updateProductCategory(PDO $db$id, $category)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get product name:
-function getProductName(PDO $db, $id)
+function SQLGetProductName(PDO $db, $id)
 {
     $sql = "SELECT name FROM products WHERE id =  :id";
     
@@ -79,7 +79,7 @@ function getProductName(PDO $db, $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get product category:
-function productCategoryGet(PDO $db,; $id)
+function SQLGetProductCategory(PDO $db, $id)
 {
     $sql = "SELECT category FROM products WHERE id =  :id";
     
@@ -95,9 +95,9 @@ function productCategoryGet(PDO $db,; $id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Delete product :
-function productDelete(PDO $db, $id)
+function SQLDeleteProduct(PDO $db, $id)
 {
-    $sql = "DELETE FROM products WHERE id =  :id";
+    $sql = "DELETE * FROM products WHERE id =  :id";
     
     $stmt = $db->prepare($sql);
     
