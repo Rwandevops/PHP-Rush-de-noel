@@ -28,12 +28,12 @@ class Category extends Database
             setName($name);
             $this->parentId = $parent_id;
             self::$ID++;
-            add_category(PDO $db);  // enregistrement dans la BDD
+            add_category(PDO $conn);  // enregistrement dans la BDD
         }
 
     public function __destruct()
         {
-            delete_category(PDO $db); //détruire la ligne product dans la BDD
+            delete_category($conn); //détruire la ligne product dans la BDD
         }
   public function datalistLine()
         {
