@@ -1,6 +1,6 @@
 <?php
 require_once("database.php");
-class user extends Database
+class User extends Database
 {
     protected $name;
     protected $email;
@@ -74,9 +74,23 @@ class user extends Database
             // recherche un produit dans la BDD
         }
 
-        protected function getAllUsers()
+        // protected function getAllUsers()
+        // {
+        //     $sql="SELECT * FROM users";
+        //     $result=$this->connect()->query($sql);
+        //     $numRows=$result->rowCount();
+        //     if ($numRows>0)
+        //     {
+        //         while($row=$result->fetch(PDO::FETCH_ASSOC))
+        //         {
+        //             $data[]=$row;
+        //         }
+        //         return $data;
+        //     }
+        // }      CLASS ADMIN
+        protected function getSelfUser() //=displayself
         {
-            $sql="SELECT * FROM users";
+            $sql="SELECT * FROM users"; //where id=id
             $result=$this->connect()->query($sql);
             $numRows=$result->rowCount();
             if ($numRows>0)
@@ -94,6 +108,23 @@ class user extends Database
 class admin extends user
 {
     protected $isAdmin = true;
+
+
+      protected function getAllUsers()
+        {
+            $sql="SELECT * FROM users";
+            $result=$this->connect()->query($sql);
+            $numRows=$result->rowCount();
+            if ($numRows>0)
+            {
+                while($row=$result->fetch(PDO::FETCH_ASSOC))
+                {
+                    $data[]=$row;
+                }
+                return $data;
+            }
+        }  
+
     
     public function adminCreate($name, $email, $password)
         {

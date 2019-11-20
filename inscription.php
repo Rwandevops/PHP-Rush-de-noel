@@ -1,56 +1,28 @@
 <?php
-session_start();
-function validateName() : bool
-{
-    $name=$_POST["name"];
-    return preg_match("#^[a-zA-Z0-9_]{3,10}$#", $name);
-}
-function validatePassword() : bool
-{
-    $password=$_POST["password"];
-    return preg_match("#^[a-zA-Z0-9_]{3,10}$#", $password);
-}
-function validatePasswordConfirmation() : bool
-{
-    return $_POST["password"]===$_POST["password_confirmation"];
-}
-function validateMail() :bool
-{
-    $email=($_POST["email"]);
-    return preg_match("#^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$#", $email);
-}
-function hashPassword() : string
-{
-    $hash=password_hash($_POST["password"], PASSWORD_DEFAULT);
-    return $hash;
-}
-function connexDB() : PDO
-{
-    $dsn = 'mysql:dbname=pool_php_rush;host=127.0.0.1:3306';
-    $user = 'root';
-    $password = 'password';
+require_once("validate.php");
+require_once("database.php");
+require_once("password.php");
 
-    try {
-        $db = new PDO($dsn, $user, $password);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //echo 'Connexion DB OK ';
-    } catch (PDOException $e) {
-        //echo 'Connexion DB KO : ' . $e->getMessage();
-    }
-    return $db;
-}
+session_start();
+
+
+$db=new Database();
+$conn=$db->connect();
+
+$verif=new Validate();
+$pass=new Password();
 
 function writeDB(PDO $db)
 {
     try {
-        $password=hashPassword($_POST["password"], PASSWORD_DEFAULT);
+        $hash=$pass->hashPassword($_POST["password"]);
         // définir newId et admin
         $newId=12;
         $admin=false;
 
         //test doublon email dans la table
         $doublon=null;
-        $sql_query = $db->prepare("SELECT email FROM users where email= ?");
+        $sql_query = $conn->prepare("SELECT email FROM users where email= ?");
         $sql_query->bindParam(1, $_POST["email"], PDO::PARAM_STR);
         $sql_query->execute();
         $doublon = $sql_query->fetch(PDO::FETCH_NUM);
@@ -63,17 +35,17 @@ function writeDB(PDO $db)
         }
         var_dump($_SESSION);
         
-        $sql_query=$db->prepare("INSERT INTO users (username, email, password, admin) VALUES(:name, :email, :password, :admin)");
+        $sql_query=$conn->prepare("INSERT INTO users (username, email, password, admin) VALUES(:name, :email, :password, :admin)");
         //$sql_query->bindParam(':id', $newId ,PDO::PARAM_INT);
         $sql_query->bindParam(':name', ($_POST["name"]), PDO::PARAM_STR);
         $sql_query->bindParam(':email', ($_POST["email"]), PDO::PARAM_STR);
-        $sql_query->bindParam(':password', $password, PDO::PARAM_STR);
+        $sql_query->bindParam(':password', $hash, PDO::PARAM_STR);
         $sql_query->bindParam(':admin', $admin, PDO::PARAM_BOOL);
         $sql_query->execute();
 
         
 
-        $sql_query = $db->prepare("SELECT id FROM users where email= ?");
+        $sql_query = $conn->prepare("SELECT id FROM users where email= ?");
         $sql_query->bindParam(1, $_POST["email"], PDO::PARAM_STR);
         $sql_query->execute();
         $id = $sql_query->fetch();
@@ -87,9 +59,9 @@ function writeDB(PDO $db)
     $_SESSION["username"]=$_POST["name"];
     $_SESSION["password"]=$_POST["password"];
     $_SESSION["admin"]=$admin;
-    if (empty($_SESSION["ErrorMsg"])){
+    if (empty($_SESSION["ErrorMsg"])) {
         //Appel Login.php
-    header('Location: login.php');
+        header('Location: login.php');
     }
 }
 
@@ -113,6 +85,9 @@ $mail=null;
 $password=null;
 $password_confirm=null;
 
+require_once("validate.php");
+
+
 
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
@@ -128,23 +103,22 @@ if (isset($_POST['password_confirmation'])) {
 }
 
 if (!($name==null or $mail==null or $password==null or $password_confirm==null)) {
-    if (!validateName()) {
+    if (!$verif->validateName($_POST["name"])) {
         echo("Invalid name.\n");
         $validateForm=false;
     }
-    if (!validateMail()) {
+    if (!$verif->validateMail($_POST["email"])) {
         echo("Invalid mail.\n");
         $validateForm=false;
     }
-    if (!validatePassword() or !validatePasswordConfirmation()) {
+    if (!$verif->validatePassword($_POST["password"]) or !$verif->validatePasswordConfirmation($_POST["password"],$_POST["password_confirmation"])) {
         echo("Invalid password or password confirmation.\n");
         $validateForm=false;
     }
 
     if ($validateForm) {
-        $bdd=connexDB();
-        writeDB($bdd);
-        
+        //$db=connect();
+        writeDB($db);
     }
 }
 ?>

@@ -2,24 +2,13 @@
 require_once("user.php");
 require_once("category-product.php");
 require_once("database.php");
-require_once("viewuser.php"); 
+require_once("viewuser.php");
+
 session_start();
 
-function connexDB() : PDO
-{
-    $dsn = 'mysql:dbname=pool_php_rush;host=127.0.0.1:3306';
-    $user = 'root';
-    $password = 'password';
+$db=new Database();
+$db->connect();
 
-    try {
-        $db = new PDO($dsn, $user, $password);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //echo 'Connexion DB OK ';
-    } catch (PDOException $e) {
-        //echo 'Connexion DB KO : ' . $e->getMessage();
-    }
-    return $db;
-}
 
 ?>
 <!DOCTYPE html>
@@ -34,24 +23,22 @@ function connexDB() : PDO
     echo("BRAVO ".$_SESSION['username'].", vous etes sur la page Admin -;)");
 //session_destroy();
 } else {
-        header('Location: login.php');
-    }
-    ?>
-    <a href="logout.php">LOG OUT</a>
-    <br>
+    header('Location: login.php');
+}
 
-
-
-    <?php
 // si l'utilisateur n'est pas administrateur ou pas enregistré, on le (vire) redirige vers login
-if(!$_SESSION["admin"])
-    {
-        echo("Vous n'êtes pas administrateur\n");
-        header('location:index.php');
-    }
+if (!$_SESSION["admin"]) {
+    echo("Vous n'êtes pas administrateur\n");
+    header('location:index.php');
+}
+
+
 
 $users=new ViewUser();
 $users->showAllUsers();
+
+$admin= new ViewUser();
+$admin->showSelfUser();
 
 //A FAIRE !!!!!
 //Changer viewUser sur Admin
@@ -66,6 +53,8 @@ $users->showAllUsers();
 
 ?>
 
+<a href="logout.php">LOG OUT</a>
+    <br>
 
    <br>
     
@@ -207,7 +196,7 @@ $users->showAllUsers();
     <!-- <label>USER SEARCH ENGINE:</label>
         <input type="text" list="users"/>
         <datalist id="users">
-            <?php
+            
                 // $admin=new admin($_SESSION['username'],$_SESSION['mail'],$_SESSION['password']);
                 // $sqlconnection=connexDB();
                 // $sql_query = "SELECT username from users order by id";
@@ -217,14 +206,14 @@ $users->showAllUsers();
                 // foreach($result as $admin) {
                 //     echo $user->datalistLine();
                 // }
-            ?>
+          
         </datalist> 
              -->
             <!-- <br>
             <label>CATEGORY SEARCH ENGINE:</label>
         <input type="text" list="categories"/>
         <datalist id="categories">
-            <?php
+           
                 // $category=new category("CHAISE",null);
                 // $sqlconnection=connexDB();
                 // $sql_query = "SELECT name from categories order by id";
@@ -235,15 +224,15 @@ $users->showAllUsers();
                 // foreach($result as $category) {
                 //     echo $category->datalistLine();
                 // }
-            ?>
+           
          </datalist>  -->
             <!--  
         <br>
             <label>PRODUCT SEARCH ENGINE:</label>
         <input type="text" list="products"/>
         <datalist id="products">   -->
-            <?php
-                // $admin=new admin($_SESSION['username'],$_SESSION['mail'],$_SESSION['password']);
+      
+                <!-- // $admin=new admin($_SESSION['username'],$_SESSION['mail'],$_SESSION['password']);
                 // $sqlconnection=connexDB();
                 // $sql_query = "SELECT name from products order by id";
                 // $cmd = $sqlconnection->prepare($sql_query);
@@ -252,7 +241,7 @@ $users->showAllUsers();
                 // foreach($result as $admin) {
                 //     echo $user->datalistLine();
                 // }
-            ?>
+           -->
         <!-- </datalist>  -->
 
 </body>

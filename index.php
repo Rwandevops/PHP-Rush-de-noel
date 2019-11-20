@@ -1,7 +1,13 @@
 <?php
 require_once("user.php");
-require_once("category-product.php"); 
+require_once("category-product.php");
+require_once("database.php");
 session_start();
+
+$db=new Database();
+$db->connect();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,17 +19,15 @@ session_start();
 <body>
     <?php if (isset($_SESSION['id'])) {  //verif Id dans BDD pour 2eme sécurité
     echo("BRAVO ".$_SESSION['username'].", vous etes sur la page Index -;)\n");
-    if ($_SESSION['admin'])
-    {
-        echo ("Bonjour Admin, clic sur le lien pour le backoffice <a href='admin.php'>admin.php</a>");
+    if ($_SESSION['admin']) {
+        echo("Bonjour Admin, clic sur le lien pour le backoffice <a href='admin.php'>admin.php</a>");
         var_dump($_SESSION);
     }
-
 } else {
-        header('Location: login.php');
-        // si l'utilisateur n'est pas administrateur ou pas enregistré, on le (vire) redirige vers login
-        $_SESSION["ErrorMsg"]="Vous n'êtes pas authentifié.\n";
-    }
+    header('Location: login.php');
+    // si l'utilisateur n'est pas administrateur ou pas enregistré, on le (vire) redirige vers login
+    $_SESSION["ErrorMsg"]="Vous n'êtes pas authentifié.\n";
+}
     ?>
     <a href="logout.php">LOG OUT</a>
     <br>

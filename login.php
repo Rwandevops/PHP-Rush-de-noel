@@ -1,63 +1,23 @@
 <?php
+require_once("database.php");
+require_once("validate.php");
+require_once("password.php");
+require_once("user.php");
+
+$pass=new Password();
+
+$verif=new Validate();
 
 
 // VERIF SESSION ADMIN ET NEW
 session_start();
-function validatePassword() : bool
-{
-    if (isset($_POST['password'])) {
-        $_SESSION["password"] = $_POST['password'];
-    } else {
-        $_SESSION["password"]="";
-    }
-    
-    return preg_match("#^[a-zA-Z0-9_]{3,10}$#", $_SESSION["password"]);
-}
-
-function validateMail() :bool
-{
-    $_SESSION["mail"]=($_POST["email"]);
-    return preg_match("#^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$#", $_SESSION["mail"]);
-}
-
-function passwordVerif() : bool
-{
-    $bdd=connexDB();
-    try {
-        //retrouver le hash du pwd ds la bdd where email=POST_mail
-        $sql_query=$bdd->prepare("SELECT password,username FROM users WHERE email= ?");
-        $sql_query->bindParam(1, ($_POST["email"]), PDO::PARAM_STR);
-        $sql_query->execute();
-        $hash = $sql_query->fetch();
-
-        $_SESSION['username'] = $hash[1];
-    } catch (PDOException $e) {
-        //echo 'Connexion DB KO : ' . $e->getMessage();
-    }
-
-    return  password_verify($_SESSION["password"], $hash[0]);
-}
-function connexDB() : PDO
-{
-    $dsn = 'mysql:dbname=pool_php_rush;host=127.0.0.1:3306';
-    $user = 'root';
-    $password = 'password';
-
-    try {
-        $db = new PDO($dsn, $user, $password);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //echo 'Connexion DB OK ';
-    } catch (PDOException $e) {
-        //echo 'Connexion DB KO : ' . $e->getMessage();
-    }
-    return $db;
-}
 
 function getId()
 {
-    $db=connexDB();
+    $db=new Database();
+    $conn=$db->connect();
     
-    $sql_query = $db->prepare("SELECT id FROM users where email= ?");
+    $sql_query = $conn->prepare("SELECT id FROM users where email= ?");
     
     if ($_SESSION["new"]=true) {
         $sql_query->bindParam(1, $_SESSION["mail"], PDO::PARAM_STR);
@@ -72,10 +32,11 @@ function getId()
     return $id;
 }
 
-function isAdmin() : ?bool
+function getIsAdmin() : ?bool
 {
-    $db=connexDB();
-    $sql_query = $db->prepare("SELECT admin FROM users where id= ?");
+    $db=new Database();
+    $conn=$db->connect();
+    $sql_query = $conn->prepare("SELECT admin FROM users where id= ?");
     $sql_query->bindParam(1, $_SESSION["id"], PDO::PARAM_STR);
     $sql_query->execute();
     $tab=$sql_query->fetch();
@@ -93,6 +54,9 @@ function isAdmin() : ?bool
 </head>
 <body>
 <?php
+
+
+
 if (isset($_SESSION["ErrorMsg"])) {
     echo($_SESSION["ErrorMsg"]);
 }
@@ -103,7 +67,7 @@ $password=null;
 //$header="login.php";
 
 $_SESSION["id"]=getId();
-$_SESSION["admin"]=isAdmin();
+$_SESSION["admin"]=getIsAdmin();
 
 
 
@@ -117,15 +81,15 @@ if (isset($_POST['password'])) {
 }
 
 if (!$mail==null or !$password==null) {
-    if (!validateMail()) {
+    if (!$verif->validateMail()) {
         //echo ("Invalid mail.\n");
         $validateForm=false;
     }
-    if (!validatePassword()) {
+    if (!$verif->validatePassword()) {
         //echo ("Invalid password.\n");
         $validateForm=false;
     }
-    if (!passwordVerif()) {
+    if (!$pass->passwordVerif()) {
         echo("User not found with this email/password.\n");
         $validateForm=false;
     }
@@ -150,8 +114,8 @@ if ($_SESSION["new"]) {
     $valuePassword=$_SESSION['password'];
     echo("Merci pour votre inscription, cliquez sur SUBMIT pour vous connecter automatiquement!\n");
 } else {
-     //echo("Saisissez votre email et password.\n");
- }
+    //echo("Saisissez votre email et password.\n");
+}
 ?>
 
     <form method="post" action="login.php" >
