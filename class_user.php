@@ -42,6 +42,11 @@ class User extends Database
             return $this->password;
         }
 
+    public function getIsAdmin()
+        {
+            return $this->isAdmin;
+        }
+
     public function productDisplay(product $product)
         {
             $product->display();
