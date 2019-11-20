@@ -56,7 +56,22 @@ class User extends Database
         {
             header('location:profil.php');
         }
-
+    
+    protected function getSelfUser() //=displayself
+        {
+            $sql="SELECT * FROM users"; //where id=id
+            $result=$this->connect()->query($sql);
+            $numRows=$result->rowCount();
+            if ($numRows>0)
+            {
+                while($row=$result->fetch(PDO::FETCH_ASSOC))
+                {
+                    $data[]=$row;
+                }
+                return $data;
+            }
+        }
+    
     public function __construct($name, $email, $password)
         {
             setName($name);
