@@ -52,6 +52,8 @@ function getCategoryName(PDO $db, $id)
     $stmt = $db->prepare($sql);                                  
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);           
     $stmt->execute();
+    $categoryName = $stmt->fetch(PDO::FETCH_NUM);
+    return $categoryName[0];
 }
 
 // Get category parent_id:
@@ -62,6 +64,8 @@ function getCategoryParentId(PDO $db, $id)
     $stmt = $db->prepare($sql);                                  
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);           
     $stmt->execute();
+    $categoryParentId = $stmt->fetch(PDO::FETCH_NUM);
+    return $categoryParentId[0];
 }
 
 // Delete category :
