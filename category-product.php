@@ -47,9 +47,9 @@ class product
 
     public function __construct($name, $category, $price)
         {
-            setName($name);
-            setCategory($category);
-            setPrice($price);
+            $this->setName($name);
+            $this->setCategory($category);
+            $this->setPrice($price);
             self::$ID++;
             // + enregistrement dans la BDD
         }
@@ -58,6 +58,11 @@ class product
         {
             //détruire la ligne product dans la BDD
         }
+        public function datalistLine()
+        {
+             return sprintf('<option value="%s">',$this->name);
+        }
+
 }
 
 class category
@@ -81,9 +86,9 @@ class category
             return $this->parentId;
         }
     
-        public function __construct($name, $parent_id)
+        public function __construct($name=null, $parent_id=null)
         {
-            setName($name);
+            $this->setName($name);
             $this->parentId = $parent_id;
             self::$ID++;
             // + enregistrement dans la BDD
@@ -92,5 +97,9 @@ class category
     public function __destruct()
         {
             //détruire la ligne product dans la BDD
+        }
+        public function datalistLine()
+        {
+             return sprintf('<option value="%s">',$this->name);
         }
 }

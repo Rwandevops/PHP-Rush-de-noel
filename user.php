@@ -1,12 +1,16 @@
 <?php
-
-class user
+require_once("database.php");
+class user extends Database
 {
     protected $name;
     protected $email;
     protected $password;
     protected $isAdmin = false;
     private static $ID = 0;
+    
+
+
+
 
     public function getName()
         {
@@ -32,7 +36,7 @@ class user
     
     public function setPassword($password)
         {
-            $this->password = password_hash($password);
+            $this->password = password_hash($password, PASSWORD_DEFAULT);
             // + enregistrement dans la BDD
         }
     
@@ -51,11 +55,11 @@ class user
             header('location:profil.php');
         }
 
-    public function __construct($name, $email, $password)
+    public function __construct($name=null, $email=null, $password=null)
         {
-            setName($name);
-            setEmail($email);
-            setPassword($password);
+            $this->setName($name);
+            $this->setEmail($email);
+            $this->setPassword($password);
             self::$ID++;
             // + enregistrement dans la BDD
         }
@@ -69,6 +73,22 @@ class user
         {
             // recherche un produit dans la BDD
         }
+
+        protected function getAllUsers()
+        {
+            $sql="SELECT * FROM users";
+            $result=$this->connect()->query($sql);
+            $numRows=$result->rowCount();
+            if ($numRows>0)
+            {
+                while($row=$result->fetch(PDO::FETCH_ASSOC))
+                {
+                    $data[]=$row;
+                }
+                return $data;
+            }
+        }
+
 }
 
 class admin extends user
@@ -115,7 +135,7 @@ class admin extends user
 
     private function setToAdmin(user $user)
         {
-            $user_ID = $user->id;
+            //$user_ID = $user->id; ?
             createAdmin($user->name, $user->email, $user->password);
             echo($user->name . " est maintenant administrateur.\n");
             deleteUser($user);
@@ -144,17 +164,17 @@ class admin extends user
 
    public function productNameModify(product $product, $name)
        {
-            $product->setName = $name;
+            $product->setName($name);
        }
 
     public function productCategoryModify(product $product, $category)
        {
-            $product->setCategory = $category;
+            $product->setCategory($category);
        }
 
     public function productPriceModify(product $product, $price)
        {
-            $product->setPrice = $price;
+            $product->setPrice($price);
        }
 
     public function categoryNameModify(category $category, $name)
@@ -164,9 +184,13 @@ class admin extends user
        
     public function __construct()
         {
-            parent::__construct();
+            parent::__construct($this->name,$this->email,$this->password);
             $this->isAdmin = true;
         }
+        public function datalistLine()
+    {
+         return sprintf('<option value="%s">',$this->username);
+    }
 }
 
 

@@ -1,4 +1,7 @@
 <?php
+
+
+// VERIF SESSION ADMIN ET NEW
 session_start();
 function validatePassword() : bool
 {
@@ -142,7 +145,7 @@ if (!$mail==null or !$password==null) {
 $valueMail="";
 $valuePassword="'password'";
 
-if (isset($_SESSION["new"])) {
+if ($_SESSION["new"]) {
     $valueMail=$_SESSION['mail'];
     $valuePassword=$_SESSION['password'];
     echo("Merci pour votre inscription, cliquez sur SUBMIT pour vous connecter automatiquement!\n");
