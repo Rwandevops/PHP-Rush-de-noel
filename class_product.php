@@ -45,11 +45,11 @@ class Product extends Database
             setCategory($category);
             setPrice($price);
             self::$ID++;
-            add_product(PDO $db); // enregistrement dans la BDD
+            add_product($conn); // enregistrement dans la BDD
         }
 
     public function __destruct()
         {
-            delete_product(PDO $db); //détruire la ligne product dans la BDD
+            delete_product($conn); //détruire la ligne product dans la BDD
         }
 }
