@@ -1,7 +1,7 @@
 <?php
 require_once('class_database.php');
 
-class User
+class User extends Database
 {
     protected $name;
     protected $email;
