@@ -1,4 +1,7 @@
-class category
+<?php
+require_once('class_database.php');
+
+class Category
 {
     private $name;
     protected $parentId;
