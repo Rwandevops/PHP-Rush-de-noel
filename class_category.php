@@ -31,4 +31,8 @@ class category
         {
             //détruire la ligne product dans la BDD
         }
+  public function datalistLine()
+        {
+             return sprintf('<option value="%s">',$this->name);
+        }
 }
