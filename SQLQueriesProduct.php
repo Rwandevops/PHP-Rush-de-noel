@@ -97,7 +97,7 @@ function SQLGetProductCategory(PDO $db, $id)
 // Delete product :
 function SQLDeleteProduct(PDO $db, $id)
 {
-    $sql = "DELETE * FROM products WHERE id =  :id";
+    $sql = "DELETE FROM products WHERE id =  :id";
     
     $stmt = $db->prepare($sql);
     
