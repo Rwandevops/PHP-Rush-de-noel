@@ -2,7 +2,7 @@
 //category : id, name, parent_id
 
 // Add category :
-function categoryAdd(PDO $db, $name, $parent_id)
+function addCategory(PDO $db, $name, $parent_id)
 {
   
     $sql = "INSERT INTO categories (name, parent_id VALUES(:name, :parent_id))";
@@ -18,7 +18,7 @@ function categoryAdd(PDO $db, $name, $parent_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category name:
-function categoryUpdateName(PDO $db, $id, $name)
+function updateCategoryName(PDO $db, $id, $name)
 {
     $sql = "UPDATE categories SET name = :name WHERE id = :id";
 
@@ -31,7 +31,7 @@ function categoryUpdateName(PDO $db, $id, $name)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category parent_id:
-function categoryUpdateParentId(PDO $db, $id, $parent_id)
+function updateCategoryParentId(PDO $db, $id, $parent_id)
 {
     $sql = "UPDATE categories SET parent_id = :parent_id WHERE id = :id";
 
@@ -45,7 +45,7 @@ function categoryUpdateParentId(PDO $db, $id, $parent_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get category name:
-function categoryNameGet(PDO $db, $id)
+function getCategoryName(PDO $db, $id)
 {
     $sql = "SELECT name FROM users WHERE id = :id";
 
@@ -55,7 +55,7 @@ function categoryNameGet(PDO $db, $id)
 }
 
 // Get category parent_id:
-function categoryParentIdGet(PDO $db, $id)
+function getCategoryParentId(PDO $db, $id)
 {
     $sql = "SELECT parent_id FROM users WHERE id = :id";
 
@@ -65,7 +65,7 @@ function categoryParentIdGet(PDO $db, $id)
 }
 
 // Delete category :
-function categoryDelete(PDO $db, $id)
+function deleteCategory(PDO $db, $id)
 {
     $sql = "DELETE FROM categories WHERE id =  :id";
     
