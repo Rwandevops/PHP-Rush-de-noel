@@ -2,7 +2,7 @@
 // product : id, name, price, category_id
 
 // Add product :
-function productAdd(PDO $db, $name, $price, $category_id)
+function addProduct(PDO $db, $name, $price, $category_id)
 {
     $sql = "INSERT INTO products (name, price, category_id) VALUES(:name, :price, :category_id)";
                                           
@@ -18,7 +18,7 @@ function productAdd(PDO $db, $name, $price, $category_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product name:
-function productUpdateName(PDO $db, $id, $name)
+function updateProductName(PDO $db, $id, $name)
 {
     $sql = "UPDATE products SET name = :name WHERE id = :id";
 
@@ -33,7 +33,7 @@ function productUpdateName(PDO $db, $id, $name)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product price:
-function productUpdatePrice(PDO $db, $id, $price)
+function updateProductPrice(PDO $db, $id, $price)
 {
     $sql = "UPDATE products SET price = :price WHERE id = :id";
 
@@ -48,7 +48,7 @@ function productUpdatePrice(PDO $db, $id, $price)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update product category:
-function productUpdateCategory(PDO $db$id, $category)
+function updateProductCategory(PDO $db$id, $category)
 {
     $sql = "UPDATE products SET category = :category WHERE id = :id";
 
@@ -63,7 +63,7 @@ function productUpdateCategory(PDO $db$id, $category)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get product name:
-function productNameGet(PDO $db, $id)
+function getProductName(PDO $db, $id)
 {
     $sql = "SELECT name FROM products WHERE id =  :id";
     
@@ -72,6 +72,8 @@ function productNameGet(PDO $db, $id)
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);  
 
     $stmt->execute();
+    $productName = $stmt->fetch(PDO::FETCH_NUM);
+    return $productName;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
@@ -79,13 +81,15 @@ function productNameGet(PDO $db, $id)
 // Get product category:
 function productCategoryGet(PDO $db,; $id)
 {
-    $sql = "SELECT categroy FROM products WHERE id =  :id";
+    $sql = "SELECT category FROM products WHERE id =  :id";
     
     $stmt = $db->prepare($sql);
     
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);  
 
     $stmt->execute();
+    $productCategory = $stmt->fetch(PDO::FETCH_NUM);
+    return $productCategory;
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
