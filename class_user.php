@@ -1,6 +1,7 @@
 <?php
+require_once('class_database.php');
 
-class user
+class User
 {
     protected $name;
     protected $email;
@@ -167,6 +168,9 @@ class admin extends user
             parent::__construct();
             $this->isAdmin = true;
         }
+    
+    public function dataListLine()
+        {
+            return sprintf('<option value="%s">',$this->name);
+        }
 }
-
-
