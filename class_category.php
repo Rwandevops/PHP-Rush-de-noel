@@ -1,7 +1,7 @@
 <?php
 require_once('class_database.php');
 
-class Category
+class Category extends Database
 {
     private $name;
     protected $parentId;
