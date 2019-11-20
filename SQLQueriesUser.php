@@ -74,6 +74,42 @@ function userIsAdminUpdate(PDO $db, bool $isAdmin)
 
 // ------------------------------------------------------------------------------------------------------------ //
 
+// Get user Name:
+function userNameGet(PDO $db)
+{
+    $sql = "SELECT name FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);     
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Get user Email:
+function userEmailGet(PDO $db)
+{
+    $sql = "SELECT email FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);     
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Get user Password:
+function userPasswordGet(PDO $db)
+{
+    $sql = "SELECT password FROM users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                                  
+    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);     
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
 // Get user isAdmin:
 function userIsAdminGet(PDO $db)
 {
