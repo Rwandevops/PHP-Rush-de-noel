@@ -17,7 +17,7 @@ class User extends Database
     public function setName($conn, $name)
         {
             $this->name = $name;
-            SQLUserNameUpdate($conn, $this->Id, $name); // modif dans la BDD
+            SQLUpdateUserName($conn, $this->Id, $name); // modif dans la BDD
         }
 
     public function getEmail($conn)
@@ -28,13 +28,13 @@ class User extends Database
     public function setEmail($conn, $email)
         {
             $this->email = $email;
-            SQLUserUpdate($conn, $this->Id, $email); // modif dans la BDD
+            SQLUpdateUserEmail($conn, $this->Id, $email); // modif dans la BDD
         }
     
     public function setPassword($conn, $password)
         {
             $this->password = password_hash($password);
-            SQLUserUpdate($conn, $this->Id, $this->password); // modif dans la BDD
+            SQLUpdateUserPassword($conn, $this->Id, $this->password); // modif dans la BDD
         }
     
     public function getPassword()
