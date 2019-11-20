@@ -2,11 +2,11 @@
 // product : id, name, price, category_id
 
 // Add product :
-function add_product(PDO $db)
+function productAdd(PDO $db)
 {
-    $sql = "INSERT INTO products (name, price, category_id VALUES(:name, :price, :category_id)";
+    $sql = "INSERT INTO products (name, price, category_id VALUES(:name, :price, :category_id))";
                                           
-    $stmt = $pdo->prepare($sql);
+    $stmt = $db->prepare($sql);
                                               
     $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
     $stmt->bindParam(':price', $_POST['price'], PDO::PARAM_INT); 
@@ -17,16 +17,42 @@ function add_product(PDO $db)
 
 // ------------------------------------------------------------------------------------------------------------ //
 
-// Update product :
-function update_product(PDO $db)
+// Update product name:
+function productUpdateName(PDO $db)
 {
-    $sql = "UPDATE products SET name = :name, price = :price, category_id = :category_id WHERE id = :id";
+    $sql = "UPDATE products SET name = :name WHERE id = :id";
 
     $stmt = $pdo->prepare($sql);                                  
     
     $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
-    $stmt->bindParam(':price', $_POST['price'], PDO::PARAM_INT); 
-    $stmt->bindParam(':category_id', $_POST['category_id'], PDO::PARAM_INT);
+   
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Update product price:
+function productUpdatePrice(PDO $db)
+{
+    $sql = "UPDATE products SET price = :price WHERE id = :id";
+
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+   
+    $stmt->execute();
+}
+
+// ------------------------------------------------------------------------------------------------------------ //
+
+// Update product category:
+function productUpdateCategory(PDO $db)
+{
+    $sql = "UPDATE products SET category = :category WHERE id = :id";
+
+    $stmt = $db->prepare($sql);                
+    
+    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
    
     $stmt->execute();
 }
@@ -34,11 +60,11 @@ function update_product(PDO $db)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Delete product :
-function delete_product(PDO $db)
+function productDelete(PDO $db)
 {
     $sql = "DELETE FROM products WHERE id =  :id";
     
-    $stmt = $pdo->prepare($sql);
+    $stmt = $db->prepare($sql);
     
     $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
 
