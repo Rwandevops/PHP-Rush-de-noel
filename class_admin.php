@@ -92,7 +92,7 @@ class Admin extends User
     public function productPriceModify(product $product, $price)
        {
             $product->setPrice = $price;
-        ²   update_product($conn); // Mdif de la BDD
+            update_product($conn); // Mdif de la BDD
        }
 
     public function categoryNameModify(category $category, $name)
