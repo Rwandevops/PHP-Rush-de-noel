@@ -48,6 +48,7 @@ class Admin extends User
 
     public function getIsAdmin()
         {
+            userIsAdminGet($conn);
             return $this->isAdmin;
         }
 
@@ -113,9 +114,9 @@ class Admin extends User
         }
     
     public function dataListLine()
-    {
-        return sprintf('<option value="%s">',$this->name);
-    }
+        {
+            return sprintf('<option value="%s">',$this->name);
+        }
     
     protected function getAllUsers()
         {
