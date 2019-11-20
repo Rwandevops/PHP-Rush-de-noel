@@ -11,30 +11,36 @@ class Category extends Database
     public function setName($conn, $name)
         {
             $this->name = $name;
-            updateCategoryName($conn, $name); // modif de la bdd
+            SQLUpdateCategoryName($conn, $this->Id, $name); // modif de la bdd
         }
 
-    public function getName($conn, $id)
+    public function getName($conn)
         {
-            return getCategoryName($conn, $id);
+            return SQLgetCategoryName($conn, $this->Id);
         }
 
-    public function getParentId($conn, $id)
+    public function setParentId($conn, $parentId)
         {
-            return getCategoryParentId($conn, $Id);
+            $this->parentId = $parentId;
+            SQLUpdateCategoryParentId($conn, $this->id, $parentId); // enregistrement dans la BDD
+        }
+    
+    public function getParentId($conn)
+        {
+            return SQLgetCategoryParentId($conn, $this->Id);
         }
     
     public function __construct($conn, $name, $parent_id)
         {
-            setName($name);
+            $this->name = $name;
             $this->parentId = $parent_id;
             self::$Id++;
-            add_category($conn);  // enregistrement dans la BDD
+            SQLAddCategory($conn, $name, $parent_id);  // enregistrement dans la BDD
         }
 
     public function __destruct($conn, $id)
         {
-            delete_category($conn, $id); //détruire la ligne product dans la BDD
+            SQLdeleteCategory($conn, $id); //détruire la ligne product dans la BDD
         }
   public function datalistLine()
         {
