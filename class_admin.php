@@ -1,5 +1,7 @@
 <?php
 require_once('class_user.php');
+require_once('class_category.php');
+require_once('class_product.php');
 require_once('SQLQueriesCategory.php');
 require_once('SQLQueriesProduct.php');
 require_once('SQLQueriesUser.php');
