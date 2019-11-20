@@ -2,10 +2,10 @@
 //category : id, name, parent_id
 
 // Add category :
-function addCategory(PDO $db, $name, $parent_id)
+function SQLAddCategory(PDO $db, $name, $parent_id)
 {
   
-    $sql = "INSERT INTO categories (name, parent_id VALUES(:name, :parent_id))";
+    $sql = "INSERT INTO categories (name, parent_id) VALUES(:name, :parent_id)";
                                           
     $stmt = $db->prepare($sql);
                                               
@@ -18,7 +18,7 @@ function addCategory(PDO $db, $name, $parent_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category name:
-function updateCategoryName(PDO $db, $id, $name)
+function SQLUpdateCategoryName(PDO $db, $id, $name)
 {
     $sql = "UPDATE categories SET name = :name WHERE id = :id";
 
@@ -31,7 +31,7 @@ function updateCategoryName(PDO $db, $id, $name)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category parent_id:
-function updateCategoryParentId(PDO $db, $id, $parent_id)
+function SQLUpdateCategoryParentId(PDO $db, $id, $parent_id)
 {
     $sql = "UPDATE categories SET parent_id = :parent_id WHERE id = :id";
 
@@ -45,7 +45,7 @@ function updateCategoryParentId(PDO $db, $id, $parent_id)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get category name:
-function getCategoryName(PDO $db, $id)
+function SQLGetCategoryName(PDO $db, $id)
 {
     $sql = "SELECT name FROM users WHERE id = :id";
 
@@ -57,7 +57,7 @@ function getCategoryName(PDO $db, $id)
 }
 
 // Get category parent_id:
-function getCategoryParentId(PDO $db, $id)
+function SQLGetCategoryParentId(PDO $db, $id)
 {
     $sql = "SELECT parent_id FROM users WHERE id = :id";
 
@@ -69,7 +69,7 @@ function getCategoryParentId(PDO $db, $id)
 }
 
 // Delete category :
-function deleteCategory(PDO $db, $id)
+function SQLDeleteCategory(PDO $db, $id)
 {
     $sql = "DELETE FROM categories WHERE id =  :id";
     
