@@ -1,7 +1,7 @@
 <?php
 require_once('class_database');
 
-class Product
+class Product extends Database
 {
     private $name;
     private $category;
