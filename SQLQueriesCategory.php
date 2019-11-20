@@ -2,15 +2,15 @@
 //category : id, name, parent_id
 
 // Add category :
-function categoryAdd(PDO $db)
+function categoryAdd(PDO $db, $name, $parent_id)
 {
   
     $sql = "INSERT INTO categories (name, parent_id VALUES(:name, :parent_id))";
                                           
     $stmt = $db->prepare($sql);
                                               
-    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);       
-    $stmt->bindParam(':parent_id', $_POST['parent_id'], PDO::PARAM_INT); 
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);       
+    $stmt->bindParam(':parent_id', $parent_id, PDO::PARAM_INT); 
                                       
     $stmt->execute();
 }
@@ -18,57 +18,60 @@ function categoryAdd(PDO $db)
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category name:
-function categoryUpdateName(PDO $db)
+function categoryUpdateName(PDO $db, $id, $name)
 {
     $sql = "UPDATE categories SET name = :name WHERE id = :id";
 
-    $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);           
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);           
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);           
     $stmt->execute();
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Update category parent_id:
-function categoryUpdateParentId(PDO $db)
+function categoryUpdateParentId(PDO $db, $id, $parent_id)
 {
     $sql = "UPDATE categories SET parent_id = :parent_id WHERE id = :id";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':parent_id', $_POST['parent_id'], PDO::PARAM_STR);           
+  
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':parent_id', $parent_id, PDO::PARAM_INT);           
     $stmt->execute();
 }
 
 // ------------------------------------------------------------------------------------------------------------ //
 
 // Get category name:
-function categoryNameGet(PDO $db)
+function categoryNameGet(PDO $db, $id)
 {
     $sql = "SELECT name FROM users WHERE id = :id";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_STR);           
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);           
     $stmt->execute();
 }
 
 // Get category parent_id:
-function categoryParentIdGet(PDO $db)
+function categoryParentIdGet(PDO $db, $id)
 {
     $sql = "SELECT parent_id FROM users WHERE id = :id";
 
     $stmt = $db->prepare($sql);                                  
-    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_STR);           
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);           
     $stmt->execute();
 }
 
 // Delete category :
-function categoryDelete(PDO $db)
+function categoryDelete(PDO $db, $id)
 {
     $sql = "DELETE FROM categories WHERE id =  :id";
     
     $stmt = $db->prepare($sql);
     
-    $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);  
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);  
 
     $stmt->execute();
 }
