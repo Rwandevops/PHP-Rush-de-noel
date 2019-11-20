@@ -17,7 +17,7 @@ class User extends Database
     public function setName($name)
         {
             $this->name = $name;
-            // + enregistrement dans la BDD
+            update_user($conn); // modif dans la BDD
         }
 
     public function getEmail()
@@ -28,13 +28,13 @@ class User extends Database
     public function setEmail($email)
         {
             $this->email = $email;
-            // + enregistrement dans la BDD
+            update_user($conn); // modif dans la BDD
         }
     
     public function setPassword($password)
         {
             $this->password = password_hash($password);
-            // + enregistrement dans la BDD
+            update_user($conn); // modif dans la BDD
         }
     
     public function getPassword()
@@ -58,12 +58,12 @@ class User extends Database
             setEmail($email);
             setPassword($password);
             self::$ID++;
-            // + enregistrement dans la BDD
+            add_user($conn); // enregistrement dans la BDD
         }
 
     public function __destruct()
         {
-            //détruire la ligne user dans la BDD
+            delete_user($conn); // détruit la ligne user dans la BDD
         }
     
     public function productSearchEngine(product $product)
