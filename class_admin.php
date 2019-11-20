@@ -10,12 +10,12 @@ class Admin extends User
     
     public function createAdmin($conn, $name, $email, $password)
         {
-            __construct($name, $email, $password); // SQL géré dans __construct
+            $admin = new admin($name, $email, $password); // SQL géré dans __construct
         }
     
     public function createUser($conn, $name, $email, $password)
         {
-            parent::__construct($name, $email, $password); // SQL géré dans __parent::construct
+            $user = new user($name, $email, $password); // SQL géré dans __parent::construct
         }
     
     public function deleteUser($conn, user $user)
@@ -84,17 +84,32 @@ class Admin extends User
 
     public function modifyProductCategory($conn, product $product, $productCategory)
        {
-            $product->setProductCategory($conn, $product->getProductId(), $productCategory); // SQL géré dans la méthode setProductCategory
+            $product->setProductCategory($conn, $product->getProductId(), $productCategory); // SQL géré dans la méthode product->setProductCategory
        }
 
     public function modifyProductPrice($conn, product $product, $price)
        {
-            $product->setPrice($conn, $product->getProductId(), $price); // SQL géré dans la méthode getProductId();
+            $product->setPrice($conn, $product->getProductId(), $price); // SQL géré dans la méthode product->getProductId();
        }
+
+    public function createCategory($conn, $name, $parent_id)
+        {
+            $product = new category($conn, $name, $parent_id); // SQL géré par category->__construct
+        }
+    
+    public function deleteCategory($conn, category $category)
+        {
+            $category->__destruct($conn, $category->id); // SQL géré dans la méthode category->__destruct
+        }
 
     public function modifyCategoryName($conn, category $category, $name)
        {
-           $category->setName($conn, $category->getId(), $name); // SQL géré dans la méthode setName
+           $category->setName($conn, $category->getId(), $name); // SQL géré dans la méthode category->setName
+       }
+       
+    public function modifyCategoryParentId($conn, category $category, $parentId)
+       {
+           $category->setParentId($conn, $category->getId(), $parent_Id); // SQL géré dans la méthode category->setParentId
        }
        
     public function dataListLine()
